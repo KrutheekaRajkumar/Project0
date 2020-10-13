@@ -1,0 +1,19 @@
+
+Main Indeed webpage
+
+"""joblocs = soup.find_all(class_='recJobLoc')"""
+"""for j in joblocs:
+    location.append(j['data-rc-loc'])"""
+
+"""jobtitle = soup.find_all('h2')
+for j in jobtitle:
+    title.append(j.find('a')['title'])"""
+
+"""companys = soup.find_all(class_='company')
+for c in companys:
+    try:
+        company.append(c.find('a').text)
+    except:
+        company.append("NoName")
+        pass
+"""

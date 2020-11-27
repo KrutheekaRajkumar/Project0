@@ -1,3 +1,8 @@
+import os
+import sys
+for s in sys.path:
+    print(s)
+#sys.path.append("/Users/krutheekarajkumar/PycharmProjects/Proj1env/bin")
 from pymongo import MongoClient
 from scrapper import formatted as data
 from pprint import pprint

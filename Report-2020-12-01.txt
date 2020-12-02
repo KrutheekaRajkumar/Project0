@@ -1,0 +1,36 @@
+------- data+engineer -------
+Successfully inserted: 0 
+Failed due to duplicate entries: 15
+Total failed entries: 15
+
+-------------------------------------------
+------- data+science -------
+Successfully inserted: 0 
+Failed due to duplicate entries: 10
+Total failed entries: 10
+
+-------------------------------------------
+------- database+architect -------
+Successfully inserted: 2 
+Failed due to duplicate entries: 6
+Total failed entries: 6
+
+-------------------------------------------
+------- database+developer -------
+Successfully inserted: 5 
+Failed due to duplicate entries: 10
+Total failed entries: 10
+
+-------------------------------------------
+------- data+analyst -------
+Successfully inserted: 1 
+Failed due to duplicate entries: 13
+Total failed entries: 13
+
+-------------------------------------------
+------- BI+developer -------
+Successfully inserted: 1 
+Failed due to duplicate entries: 3
+Total failed entries: 3
+
+-------------------------------------------

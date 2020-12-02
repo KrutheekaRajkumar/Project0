@@ -2,20 +2,24 @@ import psycopg2
 import os
 #from scrapper import formatted
 import time
+import datetime
 from scrapper2 import mainMethod
+
 titlesOfInterest = ['data+engineer','data+science','database+architect',\
                         'database+developer','data+analyst','BI+developer']
 
 
-#titlesOfInterest = ['data+analyst']
 USER = os.environ.get("USER")
 HOST = os.environ.get("HOST")
 PASSWORD = os.environ.get("PASSWORD")
 
+
+
 """
 Postgres table format: 
     CREATE TABLE INDEEDJOBS (
-        id              SERIAL, 
+        id         SERIAL, 
+        label      char(100)
         url        char(10485760),
         title      varchar(50) NOT NULL,
         company    varchar(100) NOT NULL,
@@ -27,13 +31,26 @@ Postgres table format:
     );
 """
 
+def writeReport(title, report):
+    try:
+        yesterday = datetime.date.today() - datetime.timedelta(days=1)
+        yesterday_report = "Report-{}.txt".format(yesterday)
+        os.remove(yesterday_report)
+    except:
+        pass
+    reportTitle = "Report-{}.txt".format(datetime.date.today())
+    with open(reportTitle, "w+") as file_object:
+        for info in report:
+            file_object.write(info)
+    file_object.close()
+
+report = []
 # Open a cursor to perform database operations
 for title in titlesOfInterest:
     data = mainMethod(title)
     success = 0
     failed = 0
     duplicateKeyErr = 0
-    print("********************************")
     print("Title being added: {}".format(title))
     for entry in data:
         engine = psycopg2.connect(
@@ -53,8 +70,7 @@ for title in titlesOfInterest:
             success += 1
         except psycopg2.errors.IntegrityError as err:
             # print the pgcode and pgerror exceptions
-            if err.pgcode == 23505:
-                duplicateKeyErr += 1
+            duplicateKeyErr += 1
             failed += 1
             print("DuplicateKey")
         except psycopg2.errors.InFailedSqlTransaction as err:
@@ -62,6 +78,18 @@ for title in titlesOfInterest:
             failed += 1
         engine.close()
         time.sleep(1)
+    reporttitle = "------- {} -------\n".format(title)
+    report.append(reporttitle)
+    reportstr = "Successfully inserted: {} \n".format(success)
+    report.append(reportstr)
+    reportstr = ''
+    reportstr = "Failed due to duplicate entries: {}\n".format(duplicateKeyErr)
+    report.append(reportstr)
+    reportstr = ''
+    reportstr = "Total failed entries: {}\n".format(failed)
+    report.append(reportstr)
+    report.append("\n-------------------------------------------\n")
+writeReport(title, report)
 
-    print("{} entries made for {} ".format(success, title))
-    print("{} entries failed for {} ".format(failed, title))
+from sendDailyReport import mainMethod
+mainMethod()

@@ -53,7 +53,13 @@ def extract_company_from_result(soup):
 # ---- Function to get Location ---- #
 def extract_job_locations_from_result(soup):
     div = soup.find(name="div", attrs={"class":"jobsearch-InlineCompanyRating"})
-    return (div.text)
+    location = ""
+    try:
+        location = div.text
+    except:
+        location = "UNKNOWN"
+    return (location)
+
 
 # ---- Function to identify if text in consideration is talking about required qualification ---- #
 def isQualification(text):

@@ -1,3 +1,9 @@
+"""
+!!! DECOMMISSIONED !!!
+Use scrapper2 instead.
+"""
+
+
 ## Implementing Scrapper to start getting Data
 
 import requests
